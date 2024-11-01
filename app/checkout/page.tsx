@@ -21,7 +21,6 @@ function Page() {
   const options = {
     mode: "payment",
     currency: "usd",
-    amount: Number(useSearchParams().get("amount")) * 100,
   };
 
   return (
