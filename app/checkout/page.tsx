@@ -14,7 +14,11 @@ function Checkout() {
   const searchParams = useSearchParams();
   const amount = Number(searchParams.get("amount"));
 
-  return <CheckoutForm amount={amount} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutForm amount={amount} />
+    </Suspense>
+  );
 }
 
 function Page() {
@@ -24,11 +28,9 @@ function Page() {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Elements stripe={stripePromise} options={options}>
-        <Checkout />
-      </Elements>
-    </Suspense>
+    <Elements stripe={stripePromise} options={options}>
+      <Checkout />
+    </Elements>
   );
 }
 
