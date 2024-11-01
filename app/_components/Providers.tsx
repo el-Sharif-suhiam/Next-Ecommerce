@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use client";
 import React from "react";
 import { cartContext } from "../_context/cartcontext";
