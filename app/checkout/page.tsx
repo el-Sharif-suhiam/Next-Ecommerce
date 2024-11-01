@@ -12,25 +12,26 @@ const stripePromise = loadStripe(
 
 function Checkout() {
   const searchParams = useSearchParams();
-  const amount = Number(searchParams.get("amount"));
+  const amount = Number(searchParams.get("amount")) * 100;
 
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CheckoutForm amount={amount} />
-    </Suspense>
-  );
-}
-
-function Page() {
   const options = {
     mode: "payment",
     currency: "usd",
+    amount: amount,
   };
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <Checkout />
+      <CheckoutForm amount={amount / 100} />
     </Elements>
+  );
+}
+
+function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Checkout />
+    </Suspense>
   );
 }
 
