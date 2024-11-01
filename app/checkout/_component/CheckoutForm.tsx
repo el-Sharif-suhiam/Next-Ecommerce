@@ -29,7 +29,7 @@ const CheckoutForm = ({ amount }) => {
   const [errorMessage, setErrorMessage] = React.useState();
   const [loading, setLoading] = React.useState(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     const handleError = (error) => {
