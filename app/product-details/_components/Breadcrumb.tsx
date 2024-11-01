@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-function Breadcrumb({ pageData }) {
+function Breadcrumb({ title }: { title: string }) {
   return (
     <nav aria-label="Breadcrumb" className="p-4">
       <ol className="flex items-center gap-1 text-base text-gray-600">
@@ -42,7 +42,10 @@ function Breadcrumb({ pageData }) {
         </li>
 
         <li>
-          <Link href="#" className="block transition hover:text-gray-700">
+          <Link
+            href="/products"
+            className="block transition hover:text-gray-700"
+          >
             {" "}
             Product Details{" "}
           </Link>
@@ -66,7 +69,7 @@ function Breadcrumb({ pageData }) {
         <li>
           <Link href="#" className="block transition hover:text-gray-700">
             {" "}
-            {pageData}{" "}
+            {title}{" "}
           </Link>
         </li>
       </ol>

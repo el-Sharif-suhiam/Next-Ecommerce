@@ -1,13 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-function ProductCard({ cardData }) {
-  let picData = cardData.attributes.picture.data.attributes;
-  const src = `http://localhost:1337${picData.url}`;
-  console.log(cardData.attributes);
+import { productData } from "@/types";
+function ProductCard({ cardData }: { cardData: productData }) {
   return (
     <Link
-      href={`/product-details/${cardData.id}?type=${cardData.attributes.Type}`}
+      href={`/product-details/${cardData.id}?category=${cardData.category}`}
       className="group relative block overflow-hidden rounded-md"
     >
       <button className="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75">
@@ -29,30 +27,30 @@ function ProductCard({ cardData }) {
         </svg>
       </button>
 
-      <img
-        src={src}
-        alt=""
-        className="h-64 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
+      <Image
+        src={cardData.image}
+        alt="product Image"
+        width={200}
+        height={250}
+        className="h-64 w-full object-contain transition duration-500 group-hover:scale-105 sm:h-72"
       />
 
       <div className=" relative border border-gray-100 bg-white p-6">
-        {cardData.attributes.New ? (
+        {/* {cardData.attributes.New ? (
           <span className="whitespace-nowrap bg-yellow-400 px-3 py-1.5 text-xs absolute top-3 right-0 font-medium rounded-s">
             {" "}
             New{" "}
           </span>
-        ) : null}
+        ) : null} */}
 
-        <h3 className="mt-4 text-lg font-medium capitalize text-gray-900">
-          {cardData.attributes.Title}
+        <h3 className="mt-4 text-lg font-medium capitalize text-gray-900 line-clamp-1">
+          {cardData.title}
         </h3>
 
-        <p className="mt-1.5 text-sm text-gray-700">
-          ${cardData.attributes.price}
-        </p>
+        <p className="mt-1.5 text-sm text-gray-700">${cardData.price}</p>
         <hr className="my-2" />
-        <p className="mt-1.5 text-sm text-gray-600 line-clamp-1">
-          {cardData.attributes.description}
+        <p className="mt-1.5 text-sm text-gray-600 line-clamp-2">
+          {cardData.description}
         </p>
       </div>
 

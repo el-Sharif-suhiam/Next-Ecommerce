@@ -1,7 +1,11 @@
 "use client";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import React from "react";
-export default function CatagoryBtn({ Plist }) {
+export default function CatagoryBtn({
+  productsList,
+}: {
+  productsList: JSX.Element[];
+}) {
   const [showBtn, setShowBtn] = React.useState(true);
   const handleShowBtn = () => {
     setShowBtn(!showBtn);
@@ -25,7 +29,7 @@ export default function CatagoryBtn({ Plist }) {
           Categories{" "}
         </h2>
         <ul className="capitalize text-left md:ml-2 text-slate-700 flex flex-col gap-2 py-2">
-          {Plist}
+          {productsList}
         </ul>
       </div>
     </aside>

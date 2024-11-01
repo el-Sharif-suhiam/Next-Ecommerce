@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    //domains: ["localhost:1337"],
+    domains: ["fakestoreapi.com"],
     remotePatterns: [
       {
         protocol: "http",

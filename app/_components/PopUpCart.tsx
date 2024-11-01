@@ -2,7 +2,14 @@
 import React from "react";
 import { cartContext } from "../_context/cartcontext";
 import Link from "next/link";
-function PopUpCart({ showCart }) {
+import { productData } from "@/types";
+function PopUpCart({
+  showCart,
+  cartProducts,
+}: {
+  showCart: () => void;
+  cartProducts: productData[];
+}) {
   const cartItems = React.useContext(cartContext);
 
   return (
@@ -10,7 +17,7 @@ function PopUpCart({ showCart }) {
       className=" z-[999] absolute top-10 sm:h-[400px] h-[350px] md:right-0 right-[-25px] overflow-scroll rounded shadow-md w-[300px] md:w-screen max-w-sm border border-[#999] bg-white  px-4 py-8 sm:px-6 lg:px-8"
       aria-modal="true"
       role="dialog"
-      tabIndex="-1"
+      tabIndex={-1}
     >
       <button
         className="absolute right-3 end-4 top-2 text-gray-600 transition hover:scale-110"
@@ -36,35 +43,34 @@ function PopUpCart({ showCart }) {
 
       <div className="mt-4 space-y-6">
         <ul className="space-y-3">
-          {cartItems.cartData &&
-            cartItems?.cartData?.map((ele) => {
-              let product = ele.attributes.products.data[0].attributes;
+          {cartProducts &&
+            cartProducts.map((ele) => {
               return (
                 <li
                   className="flex border-solid border-[1px] bg-gray-100 border-[#999] p-2 rounded-md items-center gap-4"
-                  key={ele.attributes.products.data[0].id}
+                  key={ele.id}
                 >
                   <img
-                    src={`http://localhost:1337${product.picture.data.attributes.url}`}
+                    src={`${ele.image}`}
                     alt="product picture"
                     className="size-16 rounded object-cover"
                   />
 
                   <div>
                     <h3 className="text-sm text-gray-900 line-clamp-1">
-                      {product.Title}
+                      {ele.title}
                     </h3>
 
                     <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
                       <div>
                         <dt className="inline text-xs">Type: </dt>
-                        <dd className="inline text-xs ">{product.Type}</dd>
+                        <dd className="inline text-xs ">{ele.category}</dd>
                       </div>
 
                       <div>
                         <dt className="inline text-xs">Price: </dt>
                         <dd className="inline text-teal-600 text-xs">
-                          {product.price}$
+                          {ele.price}$
                         </dd>
                       </div>
                     </dl>
@@ -79,7 +85,7 @@ function PopUpCart({ showCart }) {
             href="/cart"
             className="block font-bold rounded border border-primary px-5 py-3 text-base text-primary transition hover:ring-1 hover:ring-teal-600"
           >
-            View my cart ({cartItems?.cartData?.length})
+            View my cart ({cartProducts.length})
           </Link>
 
           <Link

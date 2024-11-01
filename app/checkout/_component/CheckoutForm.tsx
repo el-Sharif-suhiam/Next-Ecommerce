@@ -1,26 +1,36 @@
-import { cartContext } from "../../_context/cartcontext";
+//ts-no-check
 import { useUser } from "@clerk/nextjs";
 import {
   useStripe,
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
-import React, { useContext, useState } from "react";
-import orderApis from "../../_utils/orderApis";
-import cartApi from "../../_utils/cartApi";
+import Link from "next/link";
+import React, { Suspense } from "react";
+
+function SpinLoading() {
+  return (
+    <div
+      className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+      role="status"
+    >
+      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+        Loading...
+      </span>
+    </div>
+  );
+}
+
 const CheckoutForm = ({ amount }) => {
-  const cartItems = useContext(cartContext);
-  const { user } = useUser();
+  //const cartItems = useContext(cartContext);
+  //const { user } = useUser();
   const stripe = useStripe();
   const elements = useElements();
-  const [errorMessage, setErrorMessage] = useState();
-  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = React.useState();
+  const [loading, setLoading] = React.useState(false);
 
   const handleSubmit = async (event) => {
-    // We don't want to let default form submission happen here,
-    // which would refresh the page.
     event.preventDefault();
-    createOrder_();
 
     const handleError = (error) => {
       setLoading(false);
@@ -61,7 +71,6 @@ const CheckoutForm = ({ amount }) => {
 
     if (result.error) {
       // Show error to your customer (for example, payment details incomplete)
-      console.log(result.error.message);
     } else {
       // Your customer will be redirected to your `return_url`. For some payment
       // methods like iDEAL, your customer will be redirected to an intermediate
@@ -69,42 +78,20 @@ const CheckoutForm = ({ amount }) => {
     }
   };
 
-  const createOrder_ = () => {
-    console.log(cartItems);
-    let productsIds = [];
-    cartItems.cartData.forEach((ele) => {
-      productsIds.push(ele.attributes.products.data[0].id);
-    });
-    const data = {
-      data: {
-        email: user.primaryEmailAddress.emailAddress,
-        name: user.fullName,
-        amount,
-        products: productsIds,
-      },
-    };
-    orderApis.createOrder(data).then((res) => {
-      if (res) {
-        cartItems.cartData.forEach((ele) => {
-          cartApi
-            .deleteCartItem(ele?.id)
-            .then((res) => {})
-            .catch((error) => {
-              console.error("you have an error", error);
-            });
-        });
-      }
-    });
-  };
   return (
     <form
       onSubmit={handleSubmit}
       className="container mx-auto max-w-[900px] flex flex-col justify-center gap-10 rounded-lg p-10 py-20 border-slate-200 border-solid border-[2px] bg-white shadow-2xl"
     >
-      <PaymentElement />
-      <button className=" py-2 px-6 transition text-primary border-primary border-[2px] border-solid hover:border-primry rounded-lg text-lg font-black hover:bg-primary hover:text-white">
-        Submit
-      </button>
+      <Suspense fallback={<SpinLoading />}>
+        <PaymentElement />
+        <Link
+          href={"/checkout/payment-confirm"}
+          className=" py-2 px-6 transition text-center text-primary border-primary border-[2px] border-solid hover:border-primry rounded-lg text-lg font-black hover:bg-primary hover:text-white"
+        >
+          Submit
+        </Link>
+      </Suspense>
     </form>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-function ProductList({ fetchData }) {
-  console.log(fetchData);
+import { productData } from "@/types";
+function ProductList({ fetchData }: { fetchData: productData[] }) {
   let divBox = fetchData?.map((e) => {
     return <ProductCard key={e.id} cardData={e} />;
   });

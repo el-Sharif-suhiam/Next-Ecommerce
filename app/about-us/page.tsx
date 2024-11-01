@@ -14,16 +14,32 @@ export default function AboutUs() {
             AlSharif Suhaim
           </span>{" "}
           and I created this project as a training exercise while learning React
-          and the Next.js Framework.
+          and the Next.js Framework,
+          <span className="text-black font-semibold">
+            This project was originally intended to be full stack, using Strapi
+            as a content manager(CMS) and backend. However, because I couldn't
+            find a free hosting service for the database, I had to resort to
+            using a fake API for the site, utilizing this service:{" "}
+          </span>
+          <a
+            href="https://fakestoreapi.com"
+            className="text-blue-600 underline"
+          >
+            fakestoreapi.com
+          </a>
         </p>
         <p>This project is a small full-stack app that uses:</p>
         <ul className="list-disc pl-6">
           <li>Next.js 14 as the main framework.</li>
           <li>Tailwind CSS for styling.</li>
-          <li>Strapi as the content management system.</li>
+          <li className="line-through">
+            Strapi as the content management system.
+          </li>
           <li>Stripe for payment management.</li>
-          <li>Axios library for data fetching.</li>
-          <li>Clerk for user management and authentication.</li>
+          <li className="line-through">Axios library for data fetching.</li>
+          <li className="line-through">
+            Clerk for user management and authentication.
+          </li>
         </ul>
         <p>
           The main goal of this project is to work on a full-stack application

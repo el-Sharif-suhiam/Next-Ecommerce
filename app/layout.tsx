@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import Providers from "./_components/Providers";
+import React, { ReactNode } from "react";
 
 const inter = Roboto({
   subsets: ["latin"],
@@ -15,9 +16,8 @@ export const metadata = {
     "Ecommerce project using Next js as training project, This project uses Strapi as content mangment system , stripe as payment system and tailwind CSS for styling",
 };
 
-// My first full-stake and next js full app
 // Made by: Alsharif Suhaim
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <Providers>
       <html lang="en">
